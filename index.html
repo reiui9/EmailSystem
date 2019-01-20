@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>Rentalia Email application</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var from, to, subject, text;
+        $('#send_email').click(function() {
+          to = $('#to').val();
+          $('#message').text('이메일을 보내는 중 입니다.');
+          $.get(
+            'http://localhost:3000/send',
+            { to: to },
+            function(data) {
+              if (data == 'sent') {
+                $('#message')
+                  .empty()
+                  .html(
+                    '<p>인증 이메일이 발송되었습니다. [' +
+                      to +
+                      '] 메일 박스를 확인해주세요.</p>'
+                  );
+              }
+            }
+          );
+        });
+      });
+    </script>
+    <style>
+      #container {
+        margin-left: 400px;
+        margin-top: 50px;
+      }
+      #to,
+      #subject,
+      #content {
+        font-family: 'Segoe UI';
+        font-size: 18px;
+        width: 530px;
+      }
+      h1 {
+        font-family: 'Segoe UI';
+        font-size: 40px;
+        color: #3b5998;
+      }
+      p {
+        color: green;
+      }
+      #send_email {
+        font-size: 15px;
+        font-family: 'Segoe UI';
+      }
+      #message {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>렌탈리아 이메일 인증 시스템</h1>
+      <input
+        type="text"
+        id="to"
+        placeholder="인증을 위해 이메일을 입력해주세요."
+      /><br />
+      <button id="send_email">이메일 보내기</button><br />
+      <span id="message"></span>
+    </div>
+  </body>
+</html>
